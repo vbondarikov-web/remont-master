@@ -4,122 +4,170 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BOND_PC — Компьютерная мастерская</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>body{font-family:Inter,sans-serif} .active{color:#0f1e33;font-weight:600;background:#fff}</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,sans-serif} .nav-active{background:#0f1e33;color:#fff!important} .staff-active{background:#0f1e33;color:#fff!important}</style>
 <script type="importmap">{"imports":{"@supabase/supabase-js":"https://esm.sh/@supabase/supabase-js@2"}}</script>
 </head>
-<body class="bg-[#e8ecf1] min-h-screen flex">
-<!-- SIDEBAR -->
-<aside class="w-[280px] bg-white border-r flex flex-col shrink-0 sticky top-0 h-screen">
-  <div class="p-6 border-b">
+<body class="bg-[#eef2f7] min-h-screen flex">
+<aside class="w-[300px] bg-white border-r flex flex-col shrink-0 sticky top-0 h-screen">
+  <div class="p-6 border-b bg-gradient-to-br from-[#0f1e33] to-[#1e3a5f] text-white">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 bg-[#0f1e33] rounded-xl flex items-center justify-center text-white font-black text-sm">BP</div>
-      <div><div class="font-black leading-none">BOND_PC</div><div class="text-xs text-slate-500">Комп. мастерская</div></div>
+      <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center text-[#0f1e33] font-black">BP</div>
+      <div><div class="font-black tracking-widest">BOND_PC</div><div class="text-xs text-white/70">сервис • склад • выезд</div></div>
     </div>
+    <div class="mt-4 flex gap-2 text-[11px]"><span class="bg-white/15 px-2 py-1 rounded-full">Диагностика 0₽</span><span class="bg-white/15 px-2 py-1 rounded-full">Гарантия</span></div>
   </div>
-  <nav class="flex-1 p-4 space-y-1 overflow-auto" id="navClient">
-    <button onclick="showPage('home')" data-page="home" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl text-sm">Главная</button>
-    <button onclick="showPage('prices')" data-page="prices" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl text-sm">Цены на работы</button>
-    <button onclick="showPage('reviews')" data-page="reviews" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl text-sm">Отзывы</button>
-    <button onclick="showPage('contacts')" data-page="contacts" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl text-sm">Контакты</button>
-    <button onclick="showPage('request')" data-page="request" class="nav-btn w-full text-left px-4 py-2.5 rounded-xl text-sm bg-[#0f1e33] text-white mt-4">Оставить заявку</button>
+
+  <nav id="navClient" class="flex-1 p-4 space-y-1 overflow-auto">
+    <button onclick="showPage('home')" data-page="home" class="nav-btn nav-active w-full text-left px-4 py-3 rounded-xl text-sm">Главная</button>
+    <button onclick="showPage('prices')" data-page="prices" class="nav-btn w-full text-left px-4 py-3 rounded-xl text-sm hover:bg-slate-100">Цены на работы</button>
+    <button onclick="showPage('reviews')" data-page="reviews" class="nav-btn w-full text-left px-4 py-3 rounded-xl text-sm hover:bg-slate-100">Отзывы клиентов</button>
+    <button onclick="showPage('contacts')" data-page="contacts" class="nav-btn w-full text-left px-4 py-3 rounded-xl text-sm hover:bg-slate-100">Контакты</button>
+    <button onclick="showPage('request')" data-page="request" class="nav-btn w-full text-left px-4 py-3 rounded-xl text-sm bg-[#0f1e33] text-white mt-4 hover:bg-black">Оставить заявку</button>
   </nav>
-  <nav class="hidden flex-1 p-4 space-y-1" id="navStaff">
-    <div class="text-[11px] tracking-widest text-slate-400 px-4 mb-2">МАСТЕРСКАЯ</div>
-    <button onclick="showStaff('orders')" data-staff="orders" class="sbtn active w-full text-left px-4 py-2 rounded-xl text-sm">Заказы</button>
-    <button onclick="showStaff('parts')" data-staff="parts" class="sbtn w-full text-left px-4 py-2 rounded-xl text-sm">Склад запчастей</button>
-    <button onclick="showStaff('clients')" data-staff="clients" class="sbtn w-full text-left px-4 py-2 rounded-xl text-sm">Клиенты</button>
-    <button onclick="showStaff('finance')" data-staff="finance" class="sbtn w-full text-left px-4 py-2 rounded-xl text-sm">Финансы</button>
-    <button onclick="showPage('home');doLogout()" class="w-full text-left px-4 py-2 rounded-xl text-sm text-slate-500 mt-6">Выйти из кабинета</button>
+
+  <nav id="navStaff" class="hidden flex-1 p-4 space-y-1 overflow-auto">
+    <div class="text-[11px] tracking-widest text-slate-400 px-4 mb-2">КАБИНЕТ МАСТЕРА</div>
+    <button onclick="showStaff('orders')" data-staff="orders" class="sbtn staff-active w-full text-left px-4 py-2.5 rounded-xl text-sm">Заказы</button>
+    <button onclick="showStaff('parts')" data-staff="parts" class="sbtn w-full text-left px-4 py-2.5 rounded-xl text-sm hover:bg-slate-100">Склад запчастей</button>
+    <button onclick="showStaff('clients')" data-staff="clients" class="sbtn w-full text-left px-4 py-2.5 rounded-xl text-sm hover:bg-slate-100">Клиенты</button>
+    <button onclick="showStaff('finance')" data-staff="finance" class="sbtn w-full text-left px-4 py-2.5 rounded-xl text-sm hover:bg-slate-100">Финансы</button>
+    <button id="adminNavBtn" onclick="showStaff('admin')" data-staff="admin" class="hidden sbtn w-full text-left px-4 py-2.5 rounded-xl text-sm bg-amber-100 hover:bg-amber-200 mt-2">Админ панель</button>
+    <button onclick="showPage('home');doLogout()" class="w-full text-left px-4 py-2 rounded-xl text-sm text-slate-500 mt-6 hover:bg-slate-100">Выйти</button>
   </nav>
-  <!-- БЛОК ВХОДА СОТРУДНИКОВ СНИЗУ -->
+
   <div class="p-4 border-t bg-[#f8fafc]" id="loginBox">
-    <div class="text-xs font-semibold text-slate-700 mb-2">Вход для сотрудников</div>
+    <div class="text-xs font-bold text-slate-700 mb-2">Вход для сотрудников</div>
     <div id="notAuth">
-      <input id="email" placeholder="Логин" class="w-full border p-2 rounded-xl text-sm mb-2 bg-white">
-      <input id="password" type="password" placeholder="Пароль" class="w-full border p-2 rounded-xl text-sm mb-2 bg-white">
-      <button onclick="doLogin()" class="w-full bg-[#0f1e33] text-white py-2 rounded-xl text-sm">Войти</button>
-      <p id="authMsg" class="text-xs text-red-600 mt-2"></p>
+      <input id="email" placeholder="Логин" class="w-full border p-2.5 rounded-xl text-sm mb-2 bg-white outline-none focus:border-slate-900">
+      <input id="password" type="password" placeholder="Пароль" class="w-full border p-2.5 rounded-xl text-sm mb-2 bg-white outline-none focus:border-slate-900">
+      <button onclick="doLogin()" class="w-full bg-[#0f1e33] text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-black">Войти</button>
+      <p id="authMsg" class="text-xs text-red-600 mt-2 whitespace-pre-wrap"></p>
     </div>
     <div id="isAuth" class="hidden">
-      <div class="text-sm font-medium" id="userEmail"></div><div class="text-xs text-slate-500" id="userRole"></div>
+      <div class="text-sm font-semibold" id="userEmail"></div><div class="text-xs text-slate-500" id="userRole"></div>
       <button onclick="doLogout()" class="w-full bg-white border py-2 rounded-xl text-sm mt-2">Выйти</button>
     </div>
   </div>
 </aside>
 
-<!-- CONTENT -->
 <main class="flex-1 min-h-screen">
-  <!-- CLIENT PAGES -->
   <div id="page-home" class="page">
-    <div class="bg-[#0f1e33] text-white p-10">
-      <h1 class="text-4xl font-black">Ремонт компьютеров <br>и ноутбуков в день обращения</h1>
-      <p class="text-slate-300 mt-3 max-w-xl">BOND_PC — диагностика бесплатно, гарантия на работы, оригинальные запчасти со склада. Принимаем в сервис и выезжаем на дом.</p>
-      <button onclick="showPage('request')" class="mt-6 bg-white text-[#0f1e33] px-6 py-3 rounded-xl font-semibold">Оставить заявку</button>
+    <div class="bg-gradient-to-br from-[#0f1e33] via-[#163054] to-[#0f1e33] text-white p-10">
+      <div class="max-w-4xl">
+        <div class="inline-flex bg-white/10 px-3 py-1 rounded-full text-xs">Работаем с 2018 • 4000+ ремонтов</div>
+        <h1 class="text-4xl font-black mt-4 leading-tight">Ремонт компьютеров<br>и ноутбуков за 1 день</h1>
+        <p class="text-white/70 mt-3 max-w-xl">BOND_PC — честная диагностика бесплатно, запчасти со склада, гарантия на чек. Принимаем в сервисе и выезжаем на дом.</p>
+        <div class="flex gap-3 mt-6"><button onclick="showPage('request')" class="bg-white text-[#0f1e33] px-6 py-3 rounded-xl font-bold">Оставить заявку</button><button onclick="showPage('prices')" class="bg-white/10 px-6 py-3 rounded-xl font-semibold">Посмотреть цены</button></div>
+      </div>
     </div>
     <div class="p-8 grid grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="font-bold">Диагностика 0 ₽</div><p class="text-sm text-slate-500">При ремонте у нас</p></div>
-      <div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="font-bold">Гарантия до 12 мес</div><p class="text-sm text-slate-500">На работы и запчасти</p></div>
-      <div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="font-bold">Склад в наличии</div><p class="text-sm text-slate-500">Без ожидания поставки</p></div>
+      <div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center font-bold text-emerald-700 mb-3">0</div><div class="font-bold">Диагностика 0 ₽</div><p class="text-sm text-slate-500">При ремонте у нас — бесплатно</p></div>
+      <div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center font-bold text-blue-700 mb-3">12</div><div class="font-bold">Гарантия до 12 мес</div><p class="text-sm text-slate-500">На работы и установленные детали</p></div>
+      <div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center font-bold text-orange-700 mb-3">S</div><div class="font-bold">Склад в наличии</div><p class="text-sm text-slate-500">Без ожидания поставки</p></div>
+    </div>
+    <div class="px-8 pb-8 grid grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl border shadow-sm"><h3 class="font-bold mb-2">Что ремонтируем</h3><p class="text-sm text-slate-600 leading-6">Ноутбуки, ПК, моноблоки, видеокарты, материнские платы. Чистка, замена матриц, клавиатур, батарей, пайка, восстановление после залития.</p></div>
+      <div class="bg-white p-6 rounded-2xl border shadow-sm"><h3 class="font-bold mb-2">Как работаем</h3><p class="text-sm text-slate-600 leading-6">1. Заявка → 2. Диагностика 30 мин → 3. Согласование цены → 4. Ремонт → 5. Выдача с гарантией.</p></div>
     </div>
   </div>
 
   <div id="page-prices" class="page hidden p-8">
-    <h2 class="text-2xl font-bold mb-6">Цены на работы</h2>
+    <h2 class="text-2xl font-black mb-2">Цены на работы</h2><p class="text-sm text-slate-500 mb-6">Фиксированные цены, без навязывания. Точная стоимость после диагностики.</p>
     <div class="bg-white rounded-2xl border shadow-sm overflow-hidden"><table class="w-full text-sm"><thead class="bg-slate-50 text-slate-500 text-xs uppercase"><tr><th class="p-3 text-left pl-6">Услуга</th><th>Категория</th><th class="pr-6 text-right">Цена</th></tr></thead><tbody id="pricesBody"></tbody></table></div>
   </div>
 
   <div id="page-reviews" class="page hidden p-8">
-    <h2 class="text-2xl font-bold mb-6">Отзывы</h2>
-    <div id="reviewsList" class="space-y-3 mb-6"></div>
-    <div class="bg-white p-6 rounded-2xl border shadow-sm">
-      <h3 class="font-semibold mb-3">Оставить отзыв</h3>
-      <input id="r_author" placeholder="Ваше имя" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
-      <textarea id="r_text" placeholder="Ваш отзыв" class="border p-2.5 rounded-xl text-sm w-full bg-[#f8fafc]"></textarea>
-      <button onclick="addReview()" class="mt-3 bg-[#0f1e33] text-white px-6 py-2 rounded-xl text-sm">Отправить</button>
+    <h2 class="text-2xl font-black mb-6">Отзывы клиентов</h2>
+    <div id="reviewsList" class="grid grid-cols-2 gap-4 mb-6"></div>
+    <div class="bg-white p-6 rounded-2xl border shadow-sm max-w-2xl">
+      <h3 class="font-bold mb-3">Оставить отзыв</h3>
+      <input id="r_author" placeholder="Ваше имя" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc] outline-none focus:border-slate-900">
+      <textarea id="r_text" placeholder="Ваш отзыв" rows="3" class="border p-2.5 rounded-xl text-sm w-full bg-[#f8fafc] outline-none focus:border-slate-900"></textarea>
+      <div class="flex gap-3 mt-3"><button onclick="addReview()" class="bg-[#0f1e33] text-white px-6 py-2.5 rounded-xl text-sm font-semibold">Отправить отзыв</button><span id="rMsg" class="text-sm py-2"></span></div>
     </div>
   </div>
 
   <div id="page-contacts" class="page hidden p-8">
-    <h2 class="text-2xl font-bold mb-4">Контакты BOND_PC</h2>
-    <div class="bg-white p-6 rounded-2xl border shadow-sm text-sm leading-6">
+    <h2 class="text-2xl font-black mb-4">Контакты BOND_PC</h2>
+    <div class="bg-white p-6 rounded-2xl border shadow-sm text-sm leading-7 max-w-2xl">
       <p><b>Телефон:</b> +7 (900) 000-00-00</p><p><b>Адрес:</b> г. Ваш город, ул. Примерная 1</p><p><b>Время:</b> Пн-Сб 10:00-19:00</p>
-      <p class="text-slate-500 mt-3">Напишите в Telegram или оставьте заявку - перезвоним за 5 минут.</p>
+      <p class="text-slate-500 mt-3">Оставьте заявку — перезвоним за 5 минут.</p>
     </div>
   </div>
 
   <div id="page-request" class="page hidden p-8">
-    <h2 class="text-2xl font-bold mb-6">Оставить заявку на ремонт</h2>
+    <h2 class="text-2xl font-black mb-6">Заявка на ремонт</h2>
     <div class="bg-white p-6 rounded-2xl border shadow-sm max-w-xl">
-      <input id="rq_name" placeholder="Ваше имя" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
-      <input id="rq_phone" placeholder="Телефон" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
-      <input id="rq_device" placeholder="Устройство (напр. HP Pavilion)" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
-      <textarea id="rq_issue" placeholder="Что случилось?" class="border p-2.5 rounded-xl text-sm w-full bg-[#f8fafc]"></textarea>
-      <button onclick="sendRequest()" class="mt-4 bg-emerald-600 text-white px-6 py-2.5 rounded-xl text-sm w-full">Отправить заявку</button>
-      <p id="rqMsg" class="text-sm mt-2"></p>
+      <input id="rq_name" placeholder="Ваше имя *" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc] outline-none focus:border-slate-900">
+      <input id="rq_phone" placeholder="Телефон *" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc] outline-none focus:border-slate-900">
+      <input id="rq_device" placeholder="Устройство (напр. HP Pavilion)" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc] outline-none focus:border-slate-900">
+      <textarea id="rq_issue" placeholder="Что случилось?" rows="3" class="border p-2.5 rounded-xl text-sm w-full bg-[#f8fafc] outline-none focus:border-slate-900"></textarea>
+      <button onclick="sendRequest()" class="mt-4 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-xl text-sm font-bold w-full">Отправить заявку</button>
+      <p id="rqMsg" class="text-sm mt-3"></p>
     </div>
   </div>
 
-  <!-- STAFF PAGES -->
   <div id="staff-orders" class="hidden p-8">
-    <h2 class="text-2xl font-bold mb-4">Заказы</h2>
+    <h2 class="text-2xl font-black mb-4">Заказы</h2>
+    <div id="ordersError" class="text-sm text-red-600 mb-2"></div>
     <div class="bg-white p-6 rounded-2xl border shadow-sm mb-6">
       <div class="grid grid-cols-4 gap-3">
-        <input id="o_name" placeholder="Клиент ФИО" class="border p-2 rounded-xl text-sm bg-[#f8fafc]">
-        <input id="o_phone" placeholder="Телефон" class="border p-2 rounded-xl text-sm bg-[#f8fafc]">
-        <input id="o_device" placeholder="Устройство" class="border p-2 rounded-xl text-sm bg-[#f8fafc]">
-        <input id="o_price" type="number" placeholder="Цена" class="border p-2 rounded-xl text-sm bg-[#f8fafc]">
+        <input id="o_name" placeholder="Клиент ФИО *" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
+        <input id="o_phone" placeholder="Телефон *" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
+        <input id="o_device" placeholder="Устройство *" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
+        <input id="o_price" type="number" placeholder="Цена" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
       </div>
-      <textarea id="o_issue" placeholder="Неисправность" class="border p-2 rounded-xl text-sm w-full mt-2 bg-[#f8fafc]"></textarea>
-      <button onclick="createOrder()" class="mt-3 bg-[#0f1e33] text-white px-6 py-2 rounded-xl text-sm">Создать заказ</button>
+      <textarea id="o_issue" placeholder="Неисправность *" rows="2" class="border p-2.5 rounded-xl text-sm w-full mt-3 bg-[#f8fafc]"></textarea>
+      <button onclick="createOrder()" class="mt-3 bg-[#0f1e33] text-white px-6 py-2.5 rounded-xl text-sm font-semibold">Создать заказ</button>
     </div>
     <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
       <table class="w-full text-sm"><thead class="bg-slate-50 text-xs uppercase text-slate-500"><tr><th class="p-3 pl-6 text-left">Клиент / Устройство</th><th>Статус</th><th>Цена</th><th>Дата</th><th class="pr-6">Действия</th></tr></thead><tbody id="ordersBody"></tbody></table>
     </div>
   </div>
-  <div id="staff-parts" class="hidden p-8"><h2 class="text-2xl font-bold mb-4">Склад запчастей</h2><div class="bg-white p-6 rounded-2xl border mb-6 grid grid-cols-5 gap-3"><input id="p_name" placeholder="Название" class="border p-2 rounded-xl text-sm bg-[#f8fafc]"><input id="p_article" placeholder="Артикул" class="border p-2 rounded-xl text-sm bg-[#f8fafc]"><input id="p_qty" type="number" placeholder="Кол-во" class="border p-2 rounded-xl text-sm bg-[#f8fafc]"><input id="p_price" type="number" placeholder="Цена" class="border p-2 rounded-xl text-sm bg-[#f8fafc]"><button onclick="addPart()" class="bg-emerald-600 text-white rounded-xl text-sm">Добавить</button></div><div class="bg-white rounded-2xl border overflow-hidden"><table class="w-full text-sm"><thead class="bg-slate-50 text-xs uppercase text-slate-500"><tr><th class="p-3 pl-6 text-left">Деталь</th><th>Кол-во</th><th>Цена</th><th class="pr-6">Действия</th></tr></thead><tbody id="partsBody"></tbody></table></div></div>
-  <div id="staff-clients" class="hidden p-8"><h2 class="text-2xl font-bold mb-4">Клиенты</h2><div class="bg-white rounded-2xl border p-6"><div id="clientsBody" class="text-sm divide-y"></div></div></div>
-  <div id="staff-finance" class="hidden p-8"><h2 class="text-2xl font-bold mb-4">Финансы</h2><div class="grid grid-cols-3 gap-6"><div class="bg-white p-6 rounded-2xl border"><div class="text-slate-500 text-xs uppercase">Выручка (Выдано)</div><div id="fin_total" class="text-2xl font-bold">0 ₽</div></div><div class="bg-white p-6 rounded-2xl border"><div class="text-slate-500 text-xs uppercase">Заказов в работе</div><div id="fin_count" class="text-2xl font-bold">0</div></div><div class="bg-white p-6 rounded-2xl border"><div class="text-slate-500 text-xs uppercase">На складе позиций</div><div id="fin_parts" class="text-2xl font-bold">0</div></div></div></div>
+
+  <div id="staff-parts" class="hidden p-8">
+    <h2 class="text-2xl font-black mb-4">Склад запчастей</h2>
+    <div id="partsError" class="text-sm text-red-600 mb-2"></div>
+    <div class="bg-white p-6 rounded-2xl border shadow-sm mb-6">
+      <div class="grid grid-cols-5 gap-3">
+        <input id="p_name" placeholder="Название *" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
+        <input id="p_article" placeholder="Артикул" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
+        <input id="p_qty" type="number" placeholder="Кол-во" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
+        <input id="p_price" type="number" placeholder="Цена" class="border p-2.5 rounded-xl text-sm bg-[#f8fafc]">
+        <button onclick="addPart()" class="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold">Добавить</button>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl border shadow-sm overflow-hidden"><table class="w-full text-sm"><thead class="bg-slate-50 text-xs uppercase text-slate-500"><tr><th class="p-3 pl-6 text-left">Деталь</th><th>Кол-во</th><th>Цена</th><th class="pr-6">Действия</th></tr></thead><tbody id="partsBody"></tbody></table></div>
+  </div>
+
+  <div id="staff-clients" class="hidden p-8"><h2 class="text-2xl font-black mb-4">Клиенты</h2><div class="bg-white rounded-2xl border shadow-sm p-6"><div id="clientsBody" class="text-sm divide-y"></div></div></div>
+  <div id="staff-finance" class="hidden p-8"><h2 class="text-2xl font-black mb-4">Финансы</h2><div class="grid grid-cols-3 gap-6"><div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="text-slate-500 text-xs uppercase">Выручка (Выдано)</div><div id="fin_total" class="text-2xl font-black">0 ₽</div></div><div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="text-slate-500 text-xs uppercase">В работе</div><div id="fin_count" class="text-2xl font-black">0</div></div><div class="bg-white p-6 rounded-2xl border shadow-sm"><div class="text-slate-500 text-xs uppercase">Позиций на складе</div><div id="fin_parts" class="text-2xl font-black">0</div></div></div></div>
+
+  <div id="staff-admin" class="hidden p-8">
+    <h2 class="text-2xl font-black mb-6">Админ панель</h2>
+    <div class="grid grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl border shadow-sm">
+        <h3 class="font-bold mb-4">Добавить сотрудника</h3>
+        <input id="u_email" placeholder="Логин (ivanov)" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
+        <input id="u_pass" placeholder="Пароль" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
+        <input id="u_name" placeholder="ФИО" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
+        <select id="u_role" class="border p-2.5 rounded-xl text-sm w-full mb-3 bg-[#f8fafc]"><option value="master">Мастер</option><option value="manager">Менеджер</option><option value="observer">Наблюдатель</option><option value="admin">Админ</option></select>
+        <button onclick="createUser()" class="w-full bg-[#0f1e33] text-white py-2.5 rounded-xl text-sm font-bold">Создать сотрудника</button>
+        <p id="uMsg" class="text-sm mt-2"></p>
+        <div id="usersList" class="mt-4 divide-y text-sm"></div>
+      </div>
+      <div class="bg-white p-6 rounded-2xl border shadow-sm">
+        <h3 class="font-bold mb-4">Добавить услугу / цену</h3>
+        <input id="s_name" placeholder="Услуга (напр. Замена термопасты)" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
+        <input id="s_price" placeholder="Цена (от 1500 ₽)" class="border p-2.5 rounded-xl text-sm w-full mb-2 bg-[#f8fafc]">
+        <input id="s_cat" placeholder="Категория (Услуги / Ремонт)" class="border p-2.5 rounded-xl text-sm w-full mb-3 bg-[#f8fafc]">
+        <button onclick="addService()" class="w-full bg-emerald-600 text-white py-2.5 rounded-xl text-sm font-bold">Добавить услугу</button>
+        <p id="sMsg" class="text-sm mt-2"></p>
+        <div id="servicesList" class="mt-4 divide-y text-sm"></div>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script type="module">
@@ -129,8 +177,8 @@ let profile=null
 window.showPage=(id)=>{
   document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'))
   document.getElementById('page-'+id)?.classList.remove('hidden')
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'))
-  document.querySelector(`[data-page="${id}"]`)?.classList.add('active')
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('nav-active'))
+  document.querySelector(`[data-page="${id}"]`)?.classList.add('nav-active')
   if(profile){ document.querySelectorAll('[id^="staff-"]').forEach(s=>s.classList.add('hidden')) }
   if(id==='prices') loadPrices(); if(id==='reviews') loadReviews()
 }
@@ -138,13 +186,14 @@ window.showStaff=(id)=>{
   document.querySelectorAll('.page').forEach(p=>p.classList.add('hidden'))
   document.querySelectorAll('[id^="staff-"]').forEach(s=>s.classList.add('hidden'))
   document.getElementById('staff-'+id).classList.remove('hidden')
-  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('active'))
-  document.querySelector(`[data-staff="${id}"]`)?.classList.add('active')
-  if(id==='orders') loadOrders(); if(id==='parts') loadParts(); if(id==='clients') loadClients(); if(id==='finance') loadFinance()
+  document.querySelectorAll('.sbtn').forEach(b=>b.classList.remove('staff-active'))
+  document.querySelector(`[data-staff="${id}"]`)?.classList.add('staff-active')
+  if(id==='orders') loadOrders(); if(id==='parts') loadParts(); if(id==='clients') loadClients(); if(id==='finance') loadFinance(); if(id==='admin') loadAdmin()
 }
 window.doLogin=async()=>{
   let raw=document.getElementById('email').value.trim().toLowerCase()
   let e=raw.includes('@')?raw:raw+'@m-plast.local'
+  document.getElementById('authMsg').textContent='Вход...'
   const { error }=await supabase.auth.signInWithPassword({email:e,password:document.getElementById('password').value})
   if(error){ document.getElementById('authMsg').textContent=error.message; return}
   check()
@@ -152,34 +201,80 @@ window.doLogin=async()=>{
 window.doLogout=async()=>{ await supabase.auth.signOut(); location.reload()}
 async function check(){
   const {data:{user}}=await supabase.auth.getUser(); if(!user) return
-  const {data}=await supabase.from('profiles').select('*').eq('id',user.id).single(); profile=data
+  const {data}=await supabase.from('profiles').select('*').eq('id',user.id).single(); if(!data) return
+  profile=data
   document.getElementById('notAuth').classList.add('hidden'); document.getElementById('isAuth').classList.remove('hidden')
   document.getElementById('userEmail').textContent=user.email; document.getElementById('userRole').textContent=data.role
   document.getElementById('navClient').classList.add('hidden'); document.getElementById('navStaff').classList.remove('hidden')
+  if(data.role==='admin') document.getElementById('adminNavBtn').classList.remove('hidden')
   showStaff('orders')
 }
-async function loadPrices(){ const {data}=await supabase.from('bond_prices').select('*'); document.getElementById('pricesBody').innerHTML=(data||[]).map(p=>`<tr class="border-t"><td class="p-3 pl-6 font-medium">${p.service}</td><td><span class="bg-slate-100 px-2 py-1 rounded-full text-xs">${p.category}</span></td><td class="pr-6 text-right font-semibold">${p.price}</td></tr>`).join('') }
-async function loadReviews(){ const {data}=await supabase.from('bond_reviews').select('*').order('created_at',{ascending:false}).limit(20); document.getElementById('reviewsList').innerHTML=!data?.length?'<p class="text-slate-400 text-sm">Пока нет отзывов</p>':data.map(r=>`<div class="bg-white p-4 rounded-2xl border"><div class="font-semibold text-sm">${r.author} <span class="text-yellow-500">${'★'.repeat(r.rating)}</span></div><div class="text-sm text-slate-600">${r.text}</div></div>`).join('')}
-window.addReview=async()=>{ if(!r_author.value||!r_text.value) return alert('Заполните'); await supabase.from('bond_reviews').insert([{author:r_author.value,text:r_text.value,rating:5}]); r_author.value='';r_text.value=''; loadReviews()}
+async function loadPrices(){ const {data,error}=await supabase.from('bond_prices').select('*'); if(error) return; document.getElementById('pricesBody').innerHTML=(data||[]).map(p=>`<tr class="border-t hover:bg-slate-50"><td class="p-3 pl-6 font-medium">${p.service}</td><td><span class="bg-slate-100 px-2 py-1 rounded-full text-xs">${p.category||''}</span></td><td class="pr-6 text-right font-bold">${p.price}</td></tr>`).join('') }
+async function loadReviews(){ const {data}=await supabase.from('bond_reviews').select('*').order('created_at',{ascending:false}).limit(20); document.getElementById('reviewsList').innerHTML=!data?.length?'<p class="text-slate-400 text-sm">Пока нет отзывов</p>':data.map(r=>`<div class="bg-white p-5 rounded-2xl border shadow-sm"><div class="font-bold text-sm">${r.author} <span class="text-amber-500">${'★'.repeat(r.rating||5)}</span></div><div class="text-sm text-slate-600 mt-1">${r.text}</div><div class="text-xs text-slate-400 mt-2">${new Date(r.created_at).toLocaleDateString()}</div></div>`).join('')}
+window.addReview=async()=>{
+  if(!r_author.value.trim()||!r_text.value.trim()){ rMsg.textContent='Заполните имя и отзыв'; rMsg.className='text-sm text-red-600'; return}
+  const {error}=await supabase.from('bond_reviews').insert([{author:r_author.value.trim(),text:r_text.value.trim(),rating:5}])
+  if(error){ rMsg.textContent=error.message; rMsg.className='text-sm text-red-600'; return}
+  rMsg.textContent='Спасибо! Отзыв сохранен'; rMsg.className='text-sm text-emerald-600'; r_author.value=''; r_text.value=''; loadReviews()
+}
 window.sendRequest=async()=>{
-  if(!rq_name.value||!rq_phone.value) return alert('Имя и телефон')
-  const {data:cli}=await supabase.from('bond_clients').insert([{name:rq_name.value,phone:rq_phone.value}]).select().single()
-  await supabase.from('bond_orders').insert([{client_id:cli.id,device:rq_device.value||'Не указано',issue:rq_issue.value,status:'Новый',price:0}])
-  document.getElementById('rqMsg').textContent='Заявка отправлена! Мы перезвоним.'; document.getElementById('rqMsg').className='text-sm mt-2 text-emerald-600'
+  if(!rq_name.value.trim()||!rq_phone.value.trim()){ rqMsg.textContent='Укажите имя и телефон'; rqMsg.className='text-sm text-red-600'; return}
+  const {data:cli,error:e1}=await supabase.from('bond_clients').insert([{name:rq_name.value.trim(),phone:rq_phone.value.trim()}]).select().single()
+  if(e1){ rqMsg.textContent=e1.message; rqMsg.className='text-sm text-red-600'; return}
+  const {error:e2}=await supabase.from('bond_orders').insert([{client_id:cli.id,device:rq_device.value.trim()||'Не указано',issue:rq_issue.value.trim()||'Не указано',status:'Новый',price:0}])
+  if(e2){ rqMsg.textContent=e2.message; rqMsg.className='text-sm text-red-600'; return}
+  rqMsg.textContent='Заявка отправлена! Мы перезвоним.'; rqMsg.className='text-sm text-emerald-600'
 }
 window.createOrder=async()=>{
-  let cli=null; if(o_name.value){ const {data}=await supabase.from('bond_clients').insert([{name:o_name.value,phone:o_phone.value}]).select().single(); cli=data }
-  await supabase.from('bond_orders').insert([{client_id:cli?.id,device:o_device.value,issue:o_issue.value,price:parseInt(o_price.value)||0,status:'В работе'}]); loadOrders()
+  ordersError.textContent=''
+  if(!o_name.value.trim()||!o_device.value.trim()||!o_issue.value.trim()){ ordersError.textContent='Заполните ФИО, устройство и неисправность'; return}
+  const {data:cli,error:e1}=await supabase.from('bond_clients').insert([{name:o_name.value.trim(),phone:o_phone.value.trim()}]).select().single()
+  if(e1){ ordersError.textContent=e1.message; return}
+  const {error:e2}=await supabase.from('bond_orders').insert([{client_id:cli.id,device:o_device.value.trim(),issue:o_issue.value.trim(),price:parseInt(o_price.value)||0,status:'В работе'}])
+  if(e2){ ordersError.textContent=e2.message; return}
+  o_name.value='';o_phone.value='';o_device.value='';o_price.value='';o_issue.value=''; loadOrders()
 }
-async function loadOrders(){ const {data}=await supabase.from('bond_orders').select('*, bond_clients(name,phone)').order('created_at',{ascending:false}); document.getElementById('ordersBody').innerHTML=(data||[]).map(o=>`<tr class="border-t"><td class="p-3 pl-6"><div class="font-medium">${o.bond_clients?.name||'Клиент'} — ${o.device}</div><div class="text-xs text-slate-400">${o.issue}</div></td><td><select onchange="setStatus('${o.id}',this.value)" class="border rounded-full px-2 py-1 text-xs"><option ${o.status==='Новый'?'selected':''}>Новый</option><option ${o.status==='В работе'?'selected':''}>В работе</option><option ${o.status==='Готово'?'selected':''}>Готово</option><option ${o.status==='Выдано'?'selected':''}>Выдано</option></select></td><td>${o.price} ₽</td><td class="text-xs text-slate-400">${new Date(o.created_at).toLocaleDateString()}</td><td class="pr-6"><button onclick="delOrder('${o.id}')" class="text-slate-400 hover:text-red-600 text-xs">удалить</button></td></tr>`).join('')}
-window.setStatus=async(id,s)=>{ await supabase.from('bond_orders').update({status:s}).eq('id',id); loadOrders()}
+async function loadOrders(){
+  const {data,error}=await supabase.from('bond_orders').select('*, bond_clients(name,phone)').order('created_at',{ascending:false})
+  if(error){ ordersError.textContent=error.message; return}
+  document.getElementById('ordersBody').innerHTML=(data||[]).map(o=>`<tr class="border-t hover:bg-slate-50"><td class="p-3 pl-6"><div class="font-semibold">${o.bond_clients?.name||'Клиент'} — ${o.device}</div><div class="text-xs text-slate-400">${o.issue}</div><div class="text-xs text-slate-400">${o.bond_clients?.phone||''}</div></td><td><select onchange="setStatus('${o.id}',this.value)" class="border rounded-full px-2 py-1 text-xs bg-white"><option ${o.status==='Новый'?'selected':''}>Новый</option><option ${o.status==='В работе'?'selected':''}>В работе</option><option ${o.status==='Готово'?'selected':''}>Готово</option><option ${o.status==='Выдано'?'selected':''}>Выдано</option></select></td><td class="font-bold">${o.price} ₽</td><td class="text-xs text-slate-400">${new Date(o.created_at).toLocaleDateString()}</td><td class="pr-6"><button onclick="delOrder('${o.id}')" class="text-slate-400 hover:text-red-600 text-xs">удалить</button></td></tr>`).join('') || `<tr><td colspan="5" class="p-6 text-center text-slate-400">Заказов пока нет</td></tr>`
+}
+window.setStatus=async(id,s)=>{ const {error}=await supabase.from('bond_orders').update({status:s}).eq('id',id); if(error) alert(error.message); loadOrders()}
 window.delOrder=async(id)=>{ if(!confirm('Удалить?'))return; await supabase.from('bond_orders').delete().eq('id',id); loadOrders()}
-window.addPart=async()=>{ await supabase.from('bond_parts').insert([{name:p_name.value,article:p_article.value,quantity:parseInt(p_qty.value)||0,price:parseFloat(p_price.value)||0}]); loadParts()}
-async function loadParts(){ const {data}=await supabase.from('bond_parts').select('*').order('created_at',{ascending:false}); document.getElementById('partsBody').innerHTML=(data||[]).map(p=>`<tr class="border-t"><td class="p-3 pl-6">${p.name}<div class="text-xs text-slate-400">${p.article||''}</div></td><td>${p.quantity}</td><td>${p.price} ₽</td><td><button onclick="delPart('${p.id}')" class="text-xs text-slate-400">x</button></td></tr>`).join('')}
+window.addPart=async()=>{
+  partsError.textContent=''
+  if(!p_name.value.trim()){ partsError.textContent='Введите название'; return}
+  const {error}=await supabase.from('bond_parts').insert([{name:p_name.value.trim(),article:p_article.value.trim(),quantity:parseInt(p_qty.value)||0,price:parseFloat(p_price.value)||0}])
+  if(error){ partsError.textContent=error.message; return}
+  p_name.value='';p_article.value='';p_qty.value='';p_price.value=''; loadParts()
+}
+async function loadParts(){ const {data}=await supabase.from('bond_parts').select('*').order('created_at',{ascending:false}); document.getElementById('partsBody').innerHTML=(data||[]).map(p=>`<tr class="border-t hover:bg-slate-50"><td class="p-3 pl-6 font-medium">${p.name}<div class="text-xs text-slate-400">${p.article||''}</div></td><td>${p.quantity}</td><td>${p.price} ₽</td><td><button onclick="delPart('${p.id}')" class="text-xs text-slate-400 hover:text-red-600">удалить</button></td></tr>`).join('') || `<tr><td colspan="4" class="p-6 text-center text-slate-400">Склад пуст</td></tr>`}
 window.delPart=async(id)=>{ await supabase.from('bond_parts').delete().eq('id',id); loadParts()}
-async function loadClients(){ const {data}=await supabase.from('bond_clients').select('*').order('created_at',{ascending:false}); document.getElementById('clientsBody').innerHTML=(data||[]).map(c=>`<div class="py-3 flex justify-between"><div><b>${c.name}</b> <span class="text-slate-500">${c.phone}</span></div><span class="text-xs text-slate-400">${new Date(c.created_at).toLocaleDateString()}</span></div>`).join('')}
+async function loadClients(){ const {data}=await supabase.from('bond_clients').select('*').order('created_at',{ascending:false}); document.getElementById('clientsBody').innerHTML=(data||[]).map(c=>`<div class="py-3 flex justify-between"><div><b>${c.name}</b> <span class="text-slate-500">${c.phone}</span></div><span class="text-xs text-slate-400">${new Date(c.created_at).toLocaleDateString()}</span></div>`).join('') || '<p class="text-slate-400">Клиентов нет</p>'}
 async function loadFinance(){ const {data:o}=await supabase.from('bond_orders').select('price,status'); const {data:p}=await supabase.from('bond_parts').select('id'); document.getElementById('fin_total').textContent=(o||[]).filter(x=>x.status==='Выдано').reduce((s,x)=>s+(x.price||0),0)+' ₽'; document.getElementById('fin_count').textContent=(o||[]).filter(x=>x.status==='В работе').length; document.getElementById('fin_parts').textContent=(p||[]).length }
-showPage('home'); check(); loadPrices()
+async function loadAdmin(){
+  const {data:users}=await supabase.from('profiles').select('*').order('created_at')
+  document.getElementById('usersList').innerHTML=(users||[]).map(u=>`<div class="flex justify-between py-2"><span><b>${u.email}</b> ${u.full_name||''} — ${u.role}</span><button onclick="delUser('${u.id}')" class="text-red-600 text-xs">удалить</button></div>`).join('')
+  const {data:sv}=await supabase.from('bond_prices').select('*')
+  document.getElementById('servicesList').innerHTML=(sv||[]).map(s=>`<div class="flex justify-between py-2"><span>${s.service} — ${s.price} <span class="text-slate-400">${s.category||''}</span></span><button onclick="delService('${s.id}')" class="text-red-600 text-xs">удал.</button></div>`).join('')
+}
+window.createUser=async()=>{
+  let raw=u_email.value.trim().toLowerCase(); let e=raw.includes('@')?raw:raw+'@m-plast.local'
+  if(!raw||!u_pass.value){ uMsg.textContent='Введите логин и пароль'; uMsg.className='text-sm text-red-600'; return}
+  const {data,error}=await supabase.auth.signUp({email:e,password:u_pass.value,options:{data:{full_name:u_name.value}}})
+  if(error){ uMsg.textContent=error.message; uMsg.className='text-sm text-red-600'; return}
+  if(data.user) await supabase.from('profiles').update({role:u_role.value, full_name:u_name.value}).eq('id',data.user.id)
+  uMsg.textContent='Сотрудник создан: '+e; uMsg.className='text-sm text-emerald-600'; loadAdmin()
+}
+window.delUser=async(id)=>{ if(!confirm('Удалить?'))return; await supabase.from('profiles').delete().eq('id',id); loadAdmin()}
+window.addService=async()=>{
+  if(!s_name.value.trim()||!s_price.value.trim()){ sMsg.textContent='Введите услугу и цену'; sMsg.className='text-sm text-red-600'; return}
+  const {error}=await supabase.from('bond_prices').insert([{service:s_name.value.trim(),price:s_price.value.trim(),category:s_cat.value.trim()||'Услуги'}])
+  if(error){ sMsg.textContent=error.message; sMsg.className='text-sm text-red-600'; return}
+  sMsg.textContent='Услуга добавлена'; sMsg.className='text-sm text-emerald-600'; s_name.value='';s_price.value='';s_cat.value=''; loadAdmin(); loadPrices()
+}
+window.delService=async(id)=>{ await supabase.from('bond_prices').delete().eq('id',id); loadAdmin(); loadPrices()}
+showPage('home'); check(); loadPrices(); loadReviews()
 </script>
 </body>
 </html>
